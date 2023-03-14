@@ -9,7 +9,7 @@ void myStrcpy(char *&dest, const char *source) {
         return;
     }
 
-    int size = strlen(source);
+    size_t size = strlen(source);
     dest = new char[size + 1];
 
     for (int i = 0; i < size; i++) {
@@ -33,10 +33,10 @@ public:
         varstaPacient = 0;
     }
 
-    Consultatie(const char *numePacient, const char *diagnostic, int varstaPacient) {
-        this->setDiagnostic(diagnostic);
-        this->setNumePacient(numePacient);
-        this->setVarstaPacient(varstaPacient);
+    Consultatie(const char *pNumePacient, const char *pDiagnostic, int pVarstaPacient) {
+        this->setDiagnostic(pDiagnostic);
+        this->setNumePacient(pNumePacient);
+        this->setVarstaPacient(pVarstaPacient);
     }
 
     //constructor de copiere
@@ -91,30 +91,30 @@ public:
     }
 
     //get si set pentru numele pacientului, diagnosticul si varsta
-    char *getNumePacient() const {
+    [[nodiscard]] char *getNumePacient() const {
         return numePacient;
     }
 
-    void setNumePacient(const char *numePacient) {
+    void setNumePacient(const char *pNumePacient) {
         delete[] this->numePacient;
-        myStrcpy(this->numePacient, numePacient);
+        myStrcpy(this->numePacient, pNumePacient);
     }
 
     char *getDiagnostic() const {
         return diagnostic;
     }
 
-    void setDiagnostic(const char *diagnostic) {
+    void setDiagnostic(const char *pDiagnostic) {
         delete[]this->diagnostic;
-        myStrcpy(this->diagnostic, diagnostic);
+        myStrcpy(this->diagnostic, pDiagnostic);
     }
 
-    int getVarstaPacient() const {
+    [[nodiscard]] int getVarstaPacient() const {
         return varstaPacient;
     }
 
-    void setVarstaPacient(int varstaPacient) {
-        Consultatie::varstaPacient = varstaPacient;
+    void setVarstaPacient(int pVarstaPacient) {
+        varstaPacient = pVarstaPacient;
     }
 
     //operatorul ==
@@ -151,17 +151,15 @@ public:
         specialitate = nullptr;
     }
 
-    Medic(const char *nume, const char *specialitate) {
-        this->setNume(nume);
-        this->setSpecialitate(specialitate);
+    Medic(const char *pNume, const char *pSpecialitate) {
+        this->setNume(pNume);
+        this->setSpecialitate(pSpecialitate);
     }
 
     //constructor de copiere
     Medic(const Medic &c) {
         this->setNume(c.getNume());
         this->setSpecialitate(c.getSpecialitate());
-//        myStrcpy(this->nume, c.getNume());
-//        myStrcpy(this->specialitate, c.getSpecialitate());
     }
 
     //get si set pentru nume si specialitate
@@ -169,18 +167,18 @@ public:
         return nume;
     }
 
-    void setNume(const char *nume) {
+    void setNume(const char *pNume) {
         delete[]this->nume;
-        myStrcpy(this->nume, nume);
+        myStrcpy(this->nume, pNume);
     }
 
-    char *getSpecialitate() const {
+    [[nodiscard]] char *getSpecialitate() const {
         return specialitate;
     }
 
-    void setSpecialitate(const char *specialitate) {
+    void setSpecialitate(const char *pSpecialitate) {
         delete[]this->specialitate;
-        myStrcpy(this->specialitate, specialitate);
+        myStrcpy(this->specialitate, pSpecialitate);
     }
 
     //operatorul =
@@ -266,7 +264,7 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                     if (strcmp(vConsultatie[index].getNumePacient(), nume_Pacient) == 0)
                         ok = true;
 
-                if (ok == false) {
+                if (!ok) {
                     cout << "Nu exista pacient cu acest nume\n";
                     break;
                 }
