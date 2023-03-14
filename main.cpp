@@ -33,7 +33,7 @@ public:
         varstaPacient = 0;
     }
 
-    Consultatie(char *numePacient, char *diagnostic, int varstaPacient) {
+    Consultatie(const char *numePacient, const char *diagnostic, int varstaPacient) {
         this->setDiagnostic(diagnostic);
         this->setNumePacient(numePacient);
         this->setVarstaPacient(varstaPacient);
@@ -329,9 +329,9 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
     } while (deschis);
 }
 
-void meniuMedic(int &nrMedici, Medic *&vMedic) {
-
-}
+//void meniuMedic(int &nrMedici, Medic *&vMedic) {
+//
+//}
 
 void meniuAfisare() {
     cout << "\n"
@@ -371,7 +371,7 @@ void meniuAfisare() {
                 meniuConsultatie(nrPacienti, vConsultatie);
                 break;
             case 2:
-                meniuMedic(nrMedici, vMedic);
+//                meniuMedic(nrMedici, vMedic);
                 break;
             default:
                 cout << "Tasta gresita!\n";
