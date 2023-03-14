@@ -9,7 +9,7 @@ void myStrcpy(char *&dest, const char *source) {
         return;
     }
 
-    size_t size = strlen(source);
+    int size = (int) strlen(source);
     dest = new char[size + 1];
 
     for (int i = 0; i < size; i++) {
