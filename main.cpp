@@ -55,6 +55,7 @@ public:
     //supraincarcare >>
     friend std::istream &operator>>(std::istream &is, Consultatie &s) {
         char buf[100];
+        int nr = 0;
 
         cout << "Introduceti nume pacient:";
         is >> buf;
@@ -65,14 +66,15 @@ public:
         s.setDiagnostic(buf);
 
         cout << "Introduceti varsta:";
-        is >> s.varstaPacient;
+        is >> nr;
+        s.setVarstaPacient(nr);
 
         cout << '\n';
         return is;
     }
 
     //supraincarcare <<
-    friend std::ostream &operator<<(std::ostream &os, Consultatie &s) {
+    friend std::ostream &operator<<(std::ostream &os, const Consultatie &s) {
         if (!s.numePacient || !s.diagnostic) {
             os << "Nu este initializat\n";
             return os;
@@ -94,7 +96,7 @@ public:
         myStrcpy(this->numePacient, pNumePacient);
     }
 
-    char *getDiagnostic() const {
+    [[nodiscard]] char *getDiagnostic() const {
         return diagnostic;
     }
 
@@ -145,10 +147,10 @@ public:
         specialitate = nullptr;
     }
 
-    Medic(const char *pNume, const char *pSpecialitate) {
-        this->setNume(pNume);
-        this->setSpecialitate(pSpecialitate);
-    }
+//    Medic(const char *pNume, const char *pSpecialitate) {
+//        this->setNume(pNume);
+//        this->setSpecialitate(pSpecialitate);
+//    }
 
     //constructor de copiere
     Medic(const Medic &c) {
@@ -202,7 +204,7 @@ public:
     }
 
     //supraincarcare <<
-    friend std::ostream &operator<<(std::ostream &os, Medic &m) {
+    friend std::ostream &operator<<(std::ostream &os, const Medic &m) {
         if (!m.nume || !m.specialitate) {
             os << "Nu este initializat\n";
             return os;
@@ -222,12 +224,12 @@ public:
 
 void meniuMedic(int &nrMedici, Medic *&vMedic) {
     bool deschis = true;
-    int tasta;
+    int tasta = -1;
 
     do {
         cout << "3) pentru adaugarea unui medic\n";
         cout << "4) pentru afisarea tuturor medicilor\n";
-        cout << "5) pentru oprirea rularii medicilor\n"
+        cout << "Orice alta tasta pentru oprirea rularii medicilor\n"
                 "Tasta:";
 
         cin >> tasta;
@@ -251,13 +253,10 @@ void meniuMedic(int &nrMedici, Medic *&vMedic) {
             }
                 break;
 
-            case 5: {
-                deschis = false;
-            }
-                break;
-
             default:
-                cout << "Tasta gresita!";
+                cout << "Se inchide meniul!\n";
+                deschis = false;
+                break;
         }
     } while (deschis);
 }
@@ -272,7 +271,7 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
         cout << "4) pentru eliminarea unei consultatii\n";
         cout << "5) pentru afisarea tuturor consultatiilor\n";
         cout << "6) pentru modificarea diagnosticului dintr-o consultatie\n";
-        cout << "7) pentru oprirea rularii consultatiilor\n"
+        cout << "Orice alta tasta pentru oprirea rularii consultatiilor\n"
                 "Tasta:";
 
         cin >> tasta;
@@ -352,11 +351,9 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                     }
             }
                 break;
-            case 7:
-                deschis = false;
-                break;
             default:
-                cout << "Tasta gresita!\n";
+                cout << "Se inchide meniul!\n";
+                deschis = false;
                 break;
         }
 
@@ -386,7 +383,7 @@ void meniuAfisare() {
         cin >> tasta;
         switch (tasta) {
             case 0:
-                tasta = 0;
+                cout << "Program terminat!";
                 break;
             case 1:
                 meniuConsultatie(nrPacienti, vConsultatie);
@@ -397,7 +394,7 @@ void meniuAfisare() {
             default:
                 cout << "Tasta gresita!\n";
         }
-    } while (tasta != 0);
+    } while (1 <= tasta && tasta <= 2);
 
 }
 
