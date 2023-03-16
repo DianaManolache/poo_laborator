@@ -265,7 +265,7 @@ void meniuMedic(int &nrMedici, Medic *&vMedic) {
 void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
 
     bool deschis = true;
-    int tasta;
+    int tasta = -1;
 
     do {
         cout << "3) pentru adaugarea unei consultatii\n";
@@ -375,7 +375,7 @@ void meniuAfisare() {
     auto *vConsultatie = new Consultatie[nrPacienti];
     auto *vMedic = new Medic[nrMedici];
 
-    int tasta;
+    int tasta = -1;
     do {
 
         cout << "0) Apasati 0 pentru a termina programul\n"
