@@ -33,12 +33,6 @@ public:
         varstaPacient = 0;
     }
 
-    Consultatie(const char *pNumePacient, const char *pDiagnostic, int pVarstaPacient) {
-        this->setDiagnostic(pDiagnostic);
-        this->setNumePacient(pNumePacient);
-        this->setVarstaPacient(pVarstaPacient);
-    }
-
     //constructor de copiere
     Consultatie(const Consultatie &c) {
         myStrcpy(this->numePacient, c.getNumePacient());
@@ -49,8 +43,8 @@ public:
     //operatorul =
     Consultatie &operator=(const Consultatie &c) {
         if (this != &c) {
-            if (this->numePacient) delete[]this->numePacient;
-            if (this->diagnostic) delete[]this->diagnostic;
+            delete[]this->numePacient;
+            delete[]this->diagnostic;
             myStrcpy(this->numePacient, c.getNumePacient());
             myStrcpy(this->diagnostic, c.getDiagnostic());
             this->varstaPacient = c.getVarstaPacient();
@@ -226,6 +220,48 @@ public:
     }
 };
 
+void meniuMedic(int &nrMedici, Medic *&vMedic) {
+    bool deschis = true;
+    int tasta;
+
+    do {
+        cout << "3) pentru adaugarea unui medic\n";
+        cout << "4) pentru afisarea tuturor medicilor\n";
+        cout << "5) pentru oprirea rularii medicilor\n"
+                "Tasta:";
+
+        cin >> tasta;
+        switch (tasta) {
+            case 3: {
+                nrMedici++;
+                auto *aux = new Medic[nrMedici];
+                for (int index = 0; index < nrMedici - 1; index++)
+                    aux[index] = vMedic[index];
+                cin >> aux[nrMedici - 1];
+                delete[] vMedic;
+                vMedic = aux;
+                cout << "Am adaugat medicul!\n";
+            }
+                break;
+
+            case 4: {
+                for (int index = 0; index < nrMedici; index++) {
+                    cout << vMedic[index] << '\n';
+                }
+            }
+                break;
+
+            case 5: {
+                deschis = false;
+            }
+                break;
+
+            default:
+                cout << "Tasta gresita!";
+        }
+    } while (deschis);
+}
+
 void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
 
     bool deschis = true;
@@ -308,8 +344,8 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                 for (int index = 0; index < nrPacienti; index++)
                     if (strcmp(vConsultatie[index].getNumePacient(), nume2_pacient) == 0) {
                         char diagnostic_nou[40];
-                        cout << "Noul diagnostic: ";
-                        cin.get();
+                        cout << "Noul diagnostic:";
+//                        cin.get();
                         cin.getline(diagnostic_nou, 40);
                         vConsultatie[index].setDiagnostic(diagnostic_nou);
                         cout << "Diagnostic modificat!\n";
@@ -327,10 +363,6 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
     } while (deschis);
 }
 
-//void meniuMedic(int &nrMedici, Medic *&vMedic) {
-//
-//}
-
 void meniuAfisare() {
     cout << "\n"
             "Proiect realizat de Manolache Diana-Elena\n"
@@ -338,22 +370,10 @@ void meniuAfisare() {
             ""
             "MENIU\n";
 
-    int nrPacienti = 2, nrMedici = 2;
+    int nrPacienti = 0, nrMedici = 0;
 
     auto *vConsultatie = new Consultatie[nrPacienti];
     auto *vMedic = new Medic[nrMedici];
-
-    Consultatie cons1("Ana", "gripa", 20);
-    Consultatie cons2("Maria", "raceala", 12);
-
-    vConsultatie[0] = cons1;
-    vConsultatie[1] = cons2;
-
-    Medic medic1("Alexia", "Pshitiatrie");
-    Medic medic2("Erika", "Dermatologie");
-
-    vMedic[0] = medic1;
-    vMedic[1] = medic2;
 
     int tasta;
     do {
@@ -365,11 +385,14 @@ void meniuAfisare() {
 
         cin >> tasta;
         switch (tasta) {
+            case 0:
+                tasta = 0;
+                break;
             case 1:
                 meniuConsultatie(nrPacienti, vConsultatie);
                 break;
             case 2:
-//                meniuMedic(nrMedici, vMedic);
+                meniuMedic(nrMedici, vMedic);
                 break;
             default:
                 cout << "Tasta gresita!\n";
