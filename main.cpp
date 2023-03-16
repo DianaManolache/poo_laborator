@@ -374,16 +374,13 @@ void meniuAfisare() {
     int tasta = -1;
     do {
 
-        cout << "0) Apasati 0 pentru a termina programul\n"
-                "1) Apasati 1 pentru consultatii\n"
+        cout << "1) Apasati 1 pentru consultatii\n"
                 "2) Apasati 2 pentru medici\n"
+                "Orice alta tasta pentru a termina progrmaul\n"
                 "Tasta:";
 
         cin >> tasta;
         switch (tasta) {
-            case 0:
-                cout << "Program terminat!";
-                break;
             case 1:
                 meniuConsultatie(nrPacienti, vConsultatie);
                 break;
@@ -391,13 +388,13 @@ void meniuAfisare() {
                 meniuMedic(nrMedici, vMedic);
                 break;
             default:
-                cout << "Tasta gresita!\n";
+                cout << "Tasta gresita! Programul terminat!\n";
         }
-    } while (1 <= tasta && tasta <= 2);
+        while (1 <= tasta && tasta <= 2);
 
-}
+    }
 
-int main() {
-    meniuAfisare();
-    return 0;
-}
+    int main() {
+        meniuAfisare();
+        return 0;
+    }
