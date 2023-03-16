@@ -363,7 +363,6 @@ void meniuAfisare() {
     cout << "\n"
             "Proiect realizat de Manolache Diana-Elena\n"
             "Grupa 133\n\n"
-            ""
             "MENIU\n";
 
     int nrPacienti = 0, nrMedici = 0;
@@ -376,7 +375,7 @@ void meniuAfisare() {
 
         cout << "1) Apasati 1 pentru consultatii\n"
                 "2) Apasati 2 pentru medici\n"
-                "Orice alta tasta pentru a termina progrmaul\n"
+                "Apasati orice alta tasta pentru a termina meniul\n"
                 "Tasta:";
 
         cin >> tasta;
@@ -388,13 +387,13 @@ void meniuAfisare() {
                 meniuMedic(nrMedici, vMedic);
                 break;
             default:
-                cout << "Tasta gresita! Programul terminat!\n";
+                cout << "Tasta gresita!\n";
         }
-        while (1 <= tasta && tasta <= 2);
+    } while (1 <= tasta && tasta <= 2);
 
-    }
+}
 
-    int main() {
-        meniuAfisare();
-        return 0;
-    }
+int main() {
+    meniuAfisare();
+    return 0;
+}
