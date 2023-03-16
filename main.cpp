@@ -180,8 +180,8 @@ public:
     //operatorul =
     Medic &operator=(const Medic &m) {
         if (this != &m) {
-            if (this->nume) delete[]this->nume;
-            if (this->specialitate) delete[]this->specialitate;
+            delete[]this->nume;
+            delete[]this->specialitate;
             myStrcpy(this->nume, m.getNume());
             myStrcpy(this->specialitate, m.getSpecialitate());
         }
@@ -289,14 +289,14 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                 break;
 
             case 4: {
-                char nume_Pacient[30];
+                char numePacient[30];
                 bool ok = false;
                 cout << "Numele pacientului eliminat: ";
                 cin.get();
-                cin.getline(nume_Pacient, 30);
+                cin.getline(numePacient, 30);
 
                 for (int index = 0; index < nrPacienti; index++)
-                    if (strcmp(vConsultatie[index].getNumePacient(), nume_Pacient) == 0)
+                    if (strcmp(vConsultatie[index].getNumePacient(), numePacient) == 0)
                         ok = true;
 
                 if (!ok) {
@@ -307,13 +307,13 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                 auto *aux = new Consultatie[nrPacienti - 1];
                 int k = 0;
                 for (int index = 0; index < nrPacienti; index++)
-                    if (strcmp(vConsultatie[index].getNumePacient(), nume_Pacient) != 0) {
+                    if (strcmp(vConsultatie[index].getNumePacient(), numePacient) != 0) {
                         aux[k++] = vConsultatie[index];
                     }
                 delete[] vConsultatie;
                 vConsultatie = aux;
                 nrPacienti--;
-                cout << "Pacientul cu numele " << nume_Pacient << " a fost eliminat\n";
+                cout << "Pacientul cu numele " << numePacient << " a fost eliminat\n";
             }
                 break;
 
@@ -326,13 +326,13 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
 
             case 6: {
                 bool ok = false;
-                char nume2_pacient[30];
+                char nume2Pacient[30];
                 cout << "Numele pacientului:";
                 cin.get();
-                cin.getline(nume2_pacient, 30);
+                cin.getline(nume2Pacient, 30);
 
                 for (int index = 0; index < nrPacienti; index++)
-                    if (strcmp(vConsultatie[index].getNumePacient(), nume2_pacient) == 0)
+                    if (strcmp(vConsultatie[index].getNumePacient(), nume2Pacient) == 0)
                         ok = true;
 
                 if (!ok) {
@@ -341,10 +341,9 @@ void meniuConsultatie(int &nrPacienti, Consultatie *&vConsultatie) {
                 }
 
                 for (int index = 0; index < nrPacienti; index++)
-                    if (strcmp(vConsultatie[index].getNumePacient(), nume2_pacient) == 0) {
+                    if (strcmp(vConsultatie[index].getNumePacient(), nume2Pacient) == 0) {
                         char diagnostic_nou[40];
                         cout << "Noul diagnostic:";
-//                        cin.get();
                         cin.getline(diagnostic_nou, 40);
                         vConsultatie[index].setDiagnostic(diagnostic_nou);
                         cout << "Diagnostic modificat!\n";
@@ -369,8 +368,8 @@ void meniuAfisare() {
 
     int nrPacienti = 0, nrMedici = 0;
 
-    Consultatie *vConsultatie = nullptr; //new Consultatie[nrPacienti];
-    Medic *vMedic = nullptr; //new Medic[nrMedici];
+    Consultatie *vConsultatie = nullptr;
+    Medic *vMedic = nullptr;
 
     int tasta = -1;
     do {
