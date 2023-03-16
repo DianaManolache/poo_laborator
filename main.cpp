@@ -369,8 +369,8 @@ void meniuAfisare() {
 
     int nrPacienti = 0, nrMedici = 0;
 
-    auto *vConsultatie = new Consultatie[nrPacienti];
-    auto *vMedic = new Medic[nrMedici];
+    Consultatie *vConsultatie = nullptr; //new Consultatie[nrPacienti];
+    Medic *vMedic = nullptr; //new Medic[nrMedici];
 
     int tasta = -1;
     do {
